@@ -36,8 +36,31 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getSetting();
     getTRandingTour();
   }
+
+String? type;
+String? type2;
+String? type3;
+String? type4;
+  getSetting() async {
+    var request = http.Request('GET', Uri.parse('${baseUrl}configs'));
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+       var result = await response.stream.bytesToString();
+       var finalResult = jsonDecode(result);
+       type = finalResult ['booking_types']['car']['name'];
+       type2 = finalResult ['booking_types']['hotel']['name'];
+       type3 = finalResult ['booking_types']['tour']['name'];
+       type4 = finalResult ['booking_types']['flight']['name'];
+      print("sdsddsd $type");
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,10 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.only(top: 10),
         child: Column(
           children: [
-            _searchBox,
+            // _searchBox,
             slider(context),
             vacation(),
-            _recomendedbookitngo(context),
+            // _recomendedbookitngo(context),
             //_destinationPopuler(),
             _recommendedFeatured(),
             //_recommendedRooms(),
@@ -197,6 +220,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 /*Padding(
                   padding: EdgeInsets.only(left: 15.0),
                 ),*/
+                type3 != 'Tour' ? SizedBox.shrink() :
+                InkWell(
+                  onTap: () {
+                    /*Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => new RecommendedDetail(
+                            keyID: key,
+                            title: title,
+                            userId: dataUser,
+                          )));*/
+                    Common.checkLogin(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>const TourHomeScreen(),));
+                  },
+                  child: cardVacations(
+                    txt: /*AppLocalizations.of(context).tr('sun')*/ 'Tour',
+                    desc: /*AppLocalizations.of(context).tr('detaileSun')*/
+                    'Tour',
+                    img: 'assets/images/tour.jpg',
+                  ),
+                ),
+                type2 != 'Hotel' ? SizedBox.shrink() :
                 InkWell(
                   onTap: () {
                     /*Navigator.of(context).push(PageRouteBuilder(
@@ -216,11 +259,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       print('____sssssss______${App.localStorage.getString("token")}_________');
                       Navigator.push(context, MaterialPageRoute(builder: (context) => HotelHomePage(),));
                     }else{
-                      Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) =>const Login()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const Login()));
                     }
-
-
                   },
                   child: cardVacations(
                     txt: /*AppLocalizations.of(context).tr('beaches')*/
@@ -230,6 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     img: 'assets/icons/beach.png',
                   ),
                 ),
+                type4 != 'Flight' ? SizedBox.shrink() :
                 InkWell(
                   onTap: () {
                     /* Navigator.of(context).push(PageRouteBuilder(
@@ -252,7 +293,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pushReplacement(
                           context, MaterialPageRoute(builder: (context) => Login()));
                     }
-
                   },
                   child: cardVacations(
                     txt: /*AppLocalizations.of(context).tr('mountains')*/
@@ -262,6 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     img: 'assets/icons/mountain.png',
                   ),
                 ),
+                type != 'Car'? SizedBox.shrink():
                 InkWell(
                   onTap: () {
                     /*Navigator.of(context).push(PageRouteBuilder(
@@ -278,19 +319,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }));*/
                     if(App.localStorage.getString("token") != null){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => BusHomeScreen(),));
-                    }else{
-                    Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) =>const Login()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const BusHomeScreen()));
+                    } else {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const Login()));
                     }
-
-
                   },
                   child: cardVacations(
                     txt: /*AppLocalizations.of(context).tr('sun')*/ 'Bus',
                     desc: /*AppLocalizations.of(context).tr('detaileSun')*/
-                        'Bus',
-                    img: 'assets/icons/sun.png',
+                        'Bus', img: 'assets/icons/sun.png',
                   ),
                 ),
                 /*InkWell(
@@ -344,14 +381,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-              ),
+              padding: const EdgeInsets.only(top: 10.0,),
               child: cardSuggeted(
                 list: [],
                 dataUser: '',
                 trendingTourism: trendingTourism,
-              )),
+              ),
+          ),
         ],
       ),
     );
@@ -823,7 +859,6 @@ class _HomeScreenState extends State<HomeScreen> {
       var result = await response.stream.bytesToString();
       var finalResult = jsonDecode(result) ;
       if(finalResult['data']!=null){
-
         for(int i =0 ; i<(finalResult['data'] as List).length ; i++) {
           if (finalResult['data'][i]['type']== 'list_tours') {
             trendingTourism  = TrendingTourismResponse.fromJson(finalResult['data'][i]);
@@ -854,7 +889,7 @@ class cardVacations extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-          left: 10.0, right: 10.0, top: 8.0, bottom: 10.0),
+          left: 0.0, right: 0.0, top: 8.0, bottom: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -886,7 +921,7 @@ class cardVacations extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
                 txt,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontFamily: "Sofia",
                     fontSize: 13.0,
@@ -962,7 +997,7 @@ class cardSuggeted extends StatelessWidget {
                               color: Color(0xFF656565).withOpacity(0.15),
                               blurRadius: 2.0,
                               spreadRadius: 1.0,
-                            )
+                            ),
                           ]),
                       child: Center(
                         child: Text(
@@ -1082,14 +1117,9 @@ class cardLastActivity extends StatelessWidget {
           shrinkWrap: true,
           primary: false,
           itemCount: list.length,
-
-
-
           itemBuilder: (context, i) {
             // print("=======${list[i].reviewScore!.totalReview}======${list[i].reviewScore!.totalReview}=====");
             List<String> photo = [
-
-
               'https://images.unsplash.com/photo-1611892441796-ae6af0ec2cc8?',
               'https://media.istockphoto.com/id/174893699/photo/good-night-hotel-room-with-2-beds.jpg?s=170667a&w=0&k=20&c=MGWcmoOiZBd1jhXCkIJYRMZHMzkh_4p2MT8R9tRe0jA=',
               'https://media.istockphoto.com/id/815091140/photo/interior-modren-bedroom.jpg?s=170667a&w=0&k=20&c=QCZpJF-jIrLzFk6vyS6oPrCYxj0UKhlSlE9p0k1G7cc=',
@@ -1144,7 +1174,6 @@ class cardLastActivity extends StatelessWidget {
                           child: child,
                         );
                       }));*/
-
                   /*Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -1162,6 +1191,7 @@ class cardLastActivity extends StatelessWidget {
                          // serviceD: service,
                         ),
                       ));*/
+
                   Common.checkLogin(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => TourDetailNewScreen(list[i].slug!)));
                 },

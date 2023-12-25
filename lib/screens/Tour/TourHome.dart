@@ -106,98 +106,95 @@ class _TourHomeScreenState extends State<TourHomeScreen> {
                   const SizedBox(
                     height: 40,
                   ),
-
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                       Text("Select Date",style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: colors.black54.withOpacity(0.4))),
-                      const SizedBox(height: 10,),
-                      DateTimeFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Select Date',
-                          //enabledBorder: InputBorder.none,
-
-                          hintStyle: TextStyle(color: Colors.black45),
-                          errorStyle: TextStyle(
-                              color: Colors.redAccent,
-                              fontWeight: FontWeight.bold),
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.event_note),
-                          // labelText: 'Only time',
-                        ),
-                        mode: DateTimeFieldPickerMode.date,
-                        initialDate: DateTime.now().add(const Duration(days: 1)),
-                        firstDate: DateTime.now().add(const Duration(days: 1)),
-                        lastDate: DateTime(2030),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (e) {
-                          var date = e?.add(const Duration(hours: 23));
-                          return (date ?? DateTime.now())
-                              .isBefore(DateTime.now())
-                              ? 'Please select date after yesterday'
-                              : null;
-                        },
-                        onDateSelected: (DateTime value) {
-                          print(value);
-
-                          startDate = DateFormat('yyyy-MM-dd').format(value);
-                        },
-                      ),
-                      /*Row(children: [
-
-                        const SizedBox(width: 5,),
-                        Expanded(
-                          child: DateTimeFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'To',
-                              hintStyle: TextStyle(color: Colors.black45),
-                              errorStyle: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.bold),
-                              border: OutlineInputBorder(),
-                              suffixIcon: Icon(Icons.event_note),
-                              // labelText: 'Only time',
-                            ),
-                            mode: DateTimeFieldPickerMode.date,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            validator: (e) {
-                              var date = e?.add(Duration(hours: 23));
-                              return (date ?? DateTime.now())
-                                  .isBefore(DateTime.now())
-                                  ? 'Please select date after yesterday'
-                                  : null;
-                            },
-                            onDateSelected: (DateTime value) {
-                              print(value);
-
-                              endDate = DateFormat('yyyy-MM-dd').format(value);
-                            },
-                          ),
-                        ),
-                      ],),*/
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  // Column(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //      Text("Select Date",style: TextStyle(
+                  //         fontWeight: FontWeight.bold,
+                  //         fontSize: 20,
+                  //         color: colors.black54.withOpacity(0.4))),
+                  //     const SizedBox(height: 10,),
+                  //     DateTimeFormField(
+                  //       decoration: const InputDecoration(
+                  //         hintText: 'Select Date',
+                  //         //enabledBorder: InputBorder.none,
+                  //
+                  //         hintStyle: TextStyle(color: Colors.black45),
+                  //         errorStyle: TextStyle(
+                  //             color: Colors.redAccent,
+                  //             fontWeight: FontWeight.bold),
+                  //         border: OutlineInputBorder(),
+                  //         suffixIcon: Icon(Icons.event_note),
+                  //         // labelText: 'Only time',
+                  //       ),
+                  //       mode: DateTimeFieldPickerMode.date,
+                  //       initialDate: DateTime.now().add(const Duration(days: 1)),
+                  //       firstDate: DateTime.now().add(const Duration(days: 1)),
+                  //       lastDate: DateTime(2030),
+                  //       autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //       validator: (e) {
+                  //         var date = e?.add(const Duration(hours: 23));
+                  //         return (date ?? DateTime.now())
+                  //             .isBefore(DateTime.now())
+                  //             ? 'Please select date after yesterday'
+                  //             : null;
+                  //       },
+                  //       onDateSelected: (DateTime value) {
+                  //         print(value);
+                  //
+                  //         startDate = DateFormat('yyyy-MM-dd').format(value);
+                  //       },
+                  //     ),
+                  //     /*Row(children: [
+                  //
+                  //       const SizedBox(width: 5,),
+                  //       Expanded(
+                  //         child: DateTimeFormField(
+                  //           decoration: const InputDecoration(
+                  //             hintText: 'To',
+                  //             hintStyle: TextStyle(color: Colors.black45),
+                  //             errorStyle: TextStyle(
+                  //                 color: Colors.redAccent,
+                  //                 fontWeight: FontWeight.bold),
+                  //             border: OutlineInputBorder(),
+                  //             suffixIcon: Icon(Icons.event_note),
+                  //             // labelText: 'Only time',
+                  //           ),
+                  //           mode: DateTimeFieldPickerMode.date,
+                  //           autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //           validator: (e) {
+                  //             var date = e?.add(Duration(hours: 23));
+                  //             return (date ?? DateTime.now())
+                  //                 .isBefore(DateTime.now())
+                  //                 ? 'Please select date after yesterday'
+                  //                 : null;
+                  //           },
+                  //           onDateSelected: (DateTime value) {
+                  //             print(value);
+                  //
+                  //             endDate = DateFormat('yyyy-MM-dd').format(value);
+                  //           },
+                  //         ),
+                  //       ),
+                  //     ],),*/
+                  //   ],
+                  // ),
+                  // const SizedBox(
+                  //   height: 40,
+                  // ),
                   BtnSearch1(
                       height: 50,
                       width: 320,
                       title: 'Search',
                       onPress: () {
                         //&& endDate!=null
-                        if(startDate!=null&&selectedLocationId!=null ){
+                        if(selectedLocationId!=null ){
                           Get.to(TourDataListScreen(locationId: selectedLocationId,
                           ));
                         }else {
-                          ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text('Please select location and  date')));
+                          ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text('Please select location')));
                         }
-
-
                       }
                     //getFlightSearch();
                     // if (_flightKey.currentState!.validate()) {

@@ -75,7 +75,7 @@ class _SearchTourPlaceScreenState extends State<SearchTourPlaceScreen> {
     setState(() {
 
     });
-    var request = http.MultipartRequest('GET', Uri.parse('https://tour.alphawizzserver.com/api/locations?service_name=${value}'));
+    var request = http.MultipartRequest('GET', Uri.parse('https://tour.alphawizzserver.com/api/locations?service_name=$value'));
 
 
     http.StreamedResponse response = await request.send();
@@ -90,13 +90,10 @@ class _SearchTourPlaceScreenState extends State<SearchTourPlaceScreen> {
         isLoading = false ;
       });
     }else {
-
       setState(() {
         isLoading = false ;
       }) ;
-
     }
-
     }
     else {
       print(response.reasonPhrase);

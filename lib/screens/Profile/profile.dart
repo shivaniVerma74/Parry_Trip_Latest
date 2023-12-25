@@ -151,45 +151,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                     ),
-                    Divider(
-                      thickness: 1,
-                      color: colors.black54.withOpacity(0.2),
-                      height: MediaQuery.of(context).size.height / 14.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/icons/card.png",
-                              height: 25,
-                              width: 25,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              "Create Card",
-                              style: TextStyle(
-                                  color: colors.black54, fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          EditProfile()));
-                            },
-                            child: Icon(
-                              Icons.arrow_forward_ios,
-                              color: colors.black54,
-                            )),
-                      ],
-                    ),
+                    // Divider(
+                    //   thickness: 1,
+                    //   color: colors.black54.withOpacity(0.2),
+                    //   height: MediaQuery.of(context).size.height / 14.0,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Row(
+                    //       children: [
+                    //         Image.asset(
+                    //           "assets/icons/card.png",
+                    //           height: 25,
+                    //           width: 25,
+                    //         ),
+                    //         SizedBox(
+                    //           width: 8,
+                    //         ),
+                    //         Text(
+                    //           "Create Card",
+                    //           style: TextStyle(
+                    //               color: colors.black54, fontSize: 12),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     InkWell(
+                    //         onTap: () {
+                    //           Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                   builder: (context) =>
+                    //                       EditProfile()));
+                    //         },
+                    //         child: Icon(
+                    //           Icons.arrow_forward_ios,
+                    //           color: colors.black54,
+                    //         )),
+                    //   ],
+                    // ),
                     Divider(
                       thickness: 1,
                       color: colors.black54.withOpacity(0.2),

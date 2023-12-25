@@ -321,14 +321,16 @@ class Itinerary {
   String? title;
   String? desc;
   String? content;
+  String? imageUrl;
 
-  Itinerary({this.imageId, this.title, this.desc, this.content});
+  Itinerary({this.imageId, this.title, this.desc, this.content, this.imageUrl});
 
   Itinerary.fromJson(Map<String, dynamic> json) {
     imageId = json['image_id'];
     title = json['title'];
     desc = json['desc'];
     content = json['content'];
+    imageUrl = json['image_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -337,6 +339,7 @@ class Itinerary {
     data['title'] = this.title;
     data['desc'] = this.desc;
     data['content'] = this.content;
+    data['image_url'] = this.imageUrl;
     return data;
   }
 }

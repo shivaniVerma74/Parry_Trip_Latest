@@ -353,7 +353,7 @@ class _FlightBookingState extends State<FlightBooking> {
                                           });
                                         },
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 10, vertical: 5),
                                           decoration: BoxDecoration(
                                               color: currentIndex == 0

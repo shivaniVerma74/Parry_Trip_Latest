@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:parry_trip2/Splash/Splash.dart';
@@ -17,8 +18,6 @@ class MyApp extends StatefulWidget {
     _MyAppState state = context.findAncestorStateOfType<_MyAppState>()!;
     state.setLocale(newLocale);
   }
-
-
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -48,6 +47,10 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white, // Change this color to your desired color
+      statusBarIconBrightness: Brightness.light, // You can adjust the status bar icons' color
+    ));
     return GetMaterialApp(
       translations: WorldLanguage(), //Language class from world_languages.dart
       locale: Locale('en', 'US'), // translations will be displayed in that locale

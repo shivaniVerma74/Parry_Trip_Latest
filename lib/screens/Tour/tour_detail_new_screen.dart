@@ -39,6 +39,8 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
     }
     return "";
   }
+  
+  
   getDays(int? duration){
     if(duration!=null){
       int days = duration ~/ 24;
@@ -49,6 +51,7 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    print("jkhjhjhk ${model?.row?.salePrice}");
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.activeColor,
@@ -64,18 +67,18 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
               .titleLarge!
               .copyWith(color: Colors.white),
         ),
-        actions: [
-          model!=null?TextButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>AddEnquiry(model: model!)));
-          }, child: Text(
-            "Enquiry Now",
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(color: Colors.white),
-          ),):const SizedBox()
-
-        ],
+        // actions: [
+        //   model!=null?TextButton(onPressed: (){
+        //     Navigator.push(context, MaterialPageRoute(builder: (context)=>AddEnquiry(model: model!)));
+        //   }, child: Text(
+        //     "Enquiry Now",
+        //     style: Theme.of(context)
+        //         .textTheme
+        //         .labelLarge!
+        //         .copyWith(color: Colors.white),
+        //   ),):const SizedBox()
+        //
+        // ],
       ),
       body: !loading&&model!=null?SingleChildScrollView(
         child: Column(
@@ -102,19 +105,18 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.white,),
                         child: Text("Featured", style:const TextStyle(color: AppColor.activeColor,fontSize: 12,fontWeight: FontWeight.w500),),):SizedBox(),
                       SizedBox(width: 5,),
-                      getPercentage(model!.row!.price, model!.row!.salePrice)!=""?Container(
+                      getPercentage(model?.row?.price, model?.row?.salePrice)!= "" ?
+                      Container(
                         padding:const EdgeInsets.all(8.0),
-
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.white,),
-                        child: Text(getPercentage(model!.row!.price, model!.row!.salePrice), style:const TextStyle(color: AppColor.activeColor,fontSize: 12,fontWeight: FontWeight.w500),),):SizedBox(),
+                        child: Text(getPercentage(model?.row?.price, model?.row?.salePrice), style:const TextStyle(color: AppColor.activeColor,fontSize: 12,fontWeight: FontWeight.w500),),):SizedBox(),
                     ],
-                  )),
+                  ),
+              ),
               Positioned(
                   right: 10,
-
                   child: IconButton(
                     onPressed: (){
-
                     },
                     icon:const Icon(
                       Icons.favorite_border,
@@ -122,14 +124,12 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                     ),
                   )),
             ],),
-
             const SizedBox(height: 10,),
             Container(
               padding:const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Text(
                     model!.row!.title ?? "",
                     style: const TextStyle(
@@ -361,14 +361,21 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100.0),
-                              color: AppColor.activeColor,
-                            ),
-                            padding:const EdgeInsets.all(5.0),
-                            height: 20,
-                              width: 20,
-                          ),
+                            height: 55,
+                            width: 55,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                                child: Image.network("${e.imageUrl}", fit: BoxFit.fill,)),
+                          )
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(100.0),
+                          //     color: AppColor.activeColor,
+                          //   ),
+                          //   padding:const EdgeInsets.all(5.0),
+                          //   height: 20,
+                          //     width: 20,
+                          // ),
                         ],
                       ),
                       title: Text(
@@ -423,13 +430,13 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                                 fontFamily: "open-sans",
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
-                                fontSize: 10.0),
+                                fontSize: 15.0),
                           ),
                         ),
                       ],
                     )).toList(),
                   ):SizedBox(),
-                  const SizedBox(height:10,),
+                  const SizedBox(height:10),
                   const Text(
                     "Reviews",
                     style:  TextStyle(
@@ -511,7 +518,7 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                     ),
                     SizedBox(width: 3,),
                     Text(
-                      "₹${model!.row!.price}" ?? "",
+                      "₹${numberFormat(double.parse(model!.row!.price ??'0.0'))}" ?? "",
                       style: const TextStyle(
                           fontFamily: 'open-sans',
                           color: Colors.black,
@@ -522,7 +529,7 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                      "₹ "'${model!.row!.salePrice?.split(".")[0]}',
+                      "₹ "'${numberFormat(double.parse(model!.row!.salePrice?.split(".")[0] ??'0.0'))}',
                       style: const TextStyle(
                           fontFamily: "open-sans",
                           color: Colors.black,
@@ -573,7 +580,6 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   const SizedBox(height:10,),
-
                                   TextFormField(
                                     controller: startCon,
                                     readOnly: true,
@@ -634,21 +640,13 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                                       subtitle: Row(
                                         children: [
                                           IconButton(onPressed: (){
-
-
-
-
                                             if(double.parse(e.count!)>0&&double.parse(e.count!)>double.parse(e.number!)){
                                               setState((){
                                                 totalPrice -= double.parse(e.price!);
                                                 e.count = (double.parse(e.count!)-1).toStringAsFixed(0);
-
                                               });
                                             }else{
-
                                             }
-
-
                                           }, icon:const Icon(
                                             Icons.remove,
                                             color: AppColor.activeColor,
@@ -664,16 +662,12 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                                           ),
                                           IconButton(onPressed: (){
 
-
                                             if(double.parse(e.count!)<=double.parse(e.max!)){
                                               setState((){
                                                 e.count = (double.parse(e.count!)+1).toStringAsFixed(0);
                                                 totalPrice += double.parse(e.price!);
                                               });
                                             }
-
-
-
                                           }, icon:const Icon(
                                               Icons.add,
                                             color: AppColor.activeColor,
@@ -837,21 +831,36 @@ class _TourDetailNewScreenState extends State<TourDetailNewScreen> {
                       );
                     });
                   },
-                  child: Container(
-                    margin: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      color: Colors.deepOrange,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "BOOK ⇒".toUpperCase(),
-                      style:const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20.0,
-                        color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 50,
+                      width: 40,
+                      // margin: const EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        color: Colors.deepOrange,
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
+                      padding: const EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      child: model!=null?TextButton(onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> AddEnquiry(model: model!)));
+                      }, child: const Text(
+                        "Enquiry Now",
+                        style:TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.0,
+                              color: Colors.white,
+                            ),
+                      ),):const SizedBox()
+                      // Text(
+                      //   "BOOK ⇒".toUpperCase(),
+                      //   style:const TextStyle(
+                      //     fontWeight: FontWeight.w500,
+                      //     fontSize: 20.0,
+                      //     color: Colors.white,
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),

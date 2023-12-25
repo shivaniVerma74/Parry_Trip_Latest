@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 bool live = false;
 const baseUrl = "https://tour.alphawizzserver.com/api/";
 String flightUrl = live?"https://api.tripjack.com/":"https://apitest.tripjack.com/";
@@ -8,3 +10,11 @@ final int timeOut = 60;
 const int perPage =10;
 
 String name = "", firstName = "", lastName = "", email = "", password = "", profile = "";
+
+String numberFormat(double? numberToComma) {
+  print("valuee iss $numberToComma");
+  var formatter = NumberFormat('#,##,000');
+    var num=  formatter.format(numberToComma);
+
+  return num.toString();
+}
