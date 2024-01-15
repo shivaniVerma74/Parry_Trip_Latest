@@ -44,16 +44,18 @@ String? type;
 String? type2;
 String? type3;
 String? type4;
+
   getSetting() async {
     var request = http.Request('GET', Uri.parse('${baseUrl}configs'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
        var result = await response.stream.bytesToString();
        var finalResult = jsonDecode(result);
-       type = finalResult ['booking_types']['car']['name'];
-       type2 = finalResult ['booking_types']['hotel']['name'];
-       type3 = finalResult ['booking_types']['tour']['name'];
-       type4 = finalResult ['booking_types']['flight']['name'];
+       type = finalResult ['booking_types']['car'] == null ? null : finalResult['booking_types']['car']['name'];
+       type2 = finalResult ['booking_types']['hotel'] == null ? null : finalResult['booking_types']['hotel']['name'];
+       type3 = finalResult ['booking_types']['tour'] == null ? null : finalResult['booking_types']['tour']['name'];
+       type4 = finalResult ['booking_types']['flight']== null ? null : finalResult['booking_types']['flight']['name'];
+       setState(() {});
       print("sdsddsd $type");
     }
     else {
@@ -65,7 +67,7 @@ String? type4;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home',
+        title: const Text('Home',
             style: TextStyle(
                 fontWeight: FontWeight.w900,
                 fontFamily: "Gotik",
@@ -859,6 +861,7 @@ String? type4;
       var result = await response.stream.bytesToString();
       var finalResult = jsonDecode(result) ;
       if(finalResult['data']!=null){
+
         for(int i =0 ; i<(finalResult['data'] as List).length ; i++) {
           if (finalResult['data'][i]['type']== 'list_tours') {
             trendingTourism  = TrendingTourismResponse.fromJson(finalResult['data'][i]);

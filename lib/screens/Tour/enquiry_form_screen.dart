@@ -52,7 +52,6 @@ class _AddEnquiryState extends State<AddEnquiry> {
               .titleLarge!
               .copyWith(color: Colors.white),
         ),
-
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -66,7 +65,6 @@ class _AddEnquiryState extends State<AddEnquiry> {
                   Expanded(
                     child: TextFormField(
                       controller: firstCon,
-
                       style: Theme.of(context).textTheme.subtitle2,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
@@ -110,7 +108,7 @@ class _AddEnquiryState extends State<AddEnquiry> {
                 ],
               ),
               const SizedBox(height:10,),
-             /* TextFormField(
+              TextFormField(
                 controller: phoneCon,
                 keyboardType: TextInputType.phone,
                 maxLength: 10,
@@ -132,7 +130,7 @@ class _AddEnquiryState extends State<AddEnquiry> {
                   ),
                 ),
               ),
-              const SizedBox(height:10,),*/
+              const SizedBox(height:10,),
               TextFormField(
                 controller: emailCon,
                 style: Theme.of(context).textTheme.subtitle2,
@@ -266,19 +264,18 @@ class _AddEnquiryState extends State<AddEnquiry> {
       'Authorization': 'Bearer ${App.localStorage.getString("token")}'
     };
     Map param = {
-
       "enquiry_name":"${firstCon.text} ${lastCon.text}",
       "last_name":lastCon.text,
       "enquiry_email":emailCon.text,
+      'enquiry_phone': phoneCon.text,
       "enquiry_note":specialCon.text,
       "service_id":widget.model.row!.id.toString(),
       "service_type":"tour",
-
     };
     print("${baseUrl}booking/addEnquiry");
     print("$param");
     print("$headers");
-    var response = await http.post(Uri.parse('${baseUrl}booking/addEnquiry'),body: param, headers: headers);
+    var response = await http.post(Uri.parse('${baseUrl}booking/addEnquiry'), body: param, headers: headers);
     print(response.body);
     Map<String,dynamic> data = jsonDecode(response.body);
     print("$data");
@@ -292,7 +289,6 @@ class _AddEnquiryState extends State<AddEnquiry> {
       }else{
         Common().toast(data['errors'].toString());
       }
-
     } else {
       Common().toast("Something went wrong");
     }
